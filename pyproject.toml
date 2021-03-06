@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "espn_fantasy_my_matchup"
+version = "0.1.0"
+description = ""
+authors = ["RobBlumberg <robertblumberg97@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+espn-api = "0.12.1"
+pandas = "1.0.3"
+
+[tool.poetry.dev-dependencies]
+espn_fantasy_matchup_stats = {git = "git@github.com:RobBlumberg/espn_fantasy_matchup_stats.git", tag = "v0.6.0"}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
