@@ -15,8 +15,12 @@ league = League(
 
 # Find my team and opponent's team
 my_team = next((x for x in league.teams if x.team_name == "Drip Bayless"), None)
-matchup = my_team.schedule[-1]   
-opp_team = matchup.home_team if matchup.home_team.team_name != "Drip Bayless" else matchup.away_team
+matchup = my_team.schedule[-1]
+opp_team = (
+    matchup.home_team
+    if matchup.home_team.team_name != "Drip Bayless"
+    else matchup.away_team
+)
 
 # Get stats
 comparison = matchup_comparison(my_team, opp_team)
