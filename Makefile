@@ -26,4 +26,4 @@ check_format: ## check for code formatter errors
 	# 	--cov-report xml:coverage/coverage.xml \
 	# 	--cov-report annotate:coverage/annotate \
 	# 	--cov=va_framework \
-	# 	tests
+	# 	test
