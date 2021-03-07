@@ -1,27 +1,9 @@
-from espn_api.basketball import League
-from espn_fantasy_matchup_stats.auth import Auth
-from espn_fantasy_matchup_stats.player_stats import matchup_comparison
-
-# Authenticate
-auth = Auth()
-
-# League object
-league = League(
-    league_id=auth.LEAGUE_ID,
-    year=auth.LEAGUE_YEAR,
-    espn_s2=auth.LEAGUE_ESPN_S2,
-    swid=auth.LEAGUE_SWID,
-)
+from espn_fantasy_matchup_stats.auth import my_league
+from espn_fantasy_matchup_stats.my_team import MyTeam
 
 # Find my team and opponent's team
-my_team = next((x for x in league.teams if x.team_name == "Drip Bayless"), None)
-matchup = my_team.schedule[-1]
-opp_team = (
-    matchup.home_team
-    if matchup.home_team.team_name != "Drip Bayless"
-    else matchup.away_team
-)
+my_team = MyTeam(my_league, "Drip Bayless")
 
 # Get stats
-comparison = matchup_comparison(my_team, opp_team)
+comparison = my_team.get_current_matchup_comparison()
 print(comparison)
