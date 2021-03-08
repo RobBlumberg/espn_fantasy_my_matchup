@@ -65,7 +65,7 @@ requests = ">=2.0.0,<3.0.0"
 
 [[package]]
 name = "espn-fantasy-matchup-stats"
-version = "0.6.0"
+version = "0.7.0"
 description = "Fantasy Matchup Stats Helper"
 category = "dev"
 optional = false
@@ -79,8 +79,8 @@ pandas = "1.0.3"
 [package.source]
 type = "git"
 url = "git@github.com:RobBlumberg/espn_fantasy_matchup_stats.git"
-reference = "v0.6.0"
-resolved_reference = "8d7d8425382f90e9d19cd9d60296d59a8aafc22b"
+reference = "v0.7.0"
+resolved_reference = "bcb60ad206c9523726c417b4a6ca6a0625ea342c"
 
 [[package]]
 name = "idna"
@@ -223,7 +223,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "0c30433be10e1cfee2154e79bae885b35b29d8d16bd7fb23bdc5006bc5d04d22"
+content-hash = "94a886b41b835bcbe884f978b3591d450ccaafbf6a6f127fcb154c605daf2024"
 
 [metadata.files]
 appdirs = [
