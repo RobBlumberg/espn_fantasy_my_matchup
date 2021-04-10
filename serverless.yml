@@ -24,6 +24,8 @@ provider:
   name: aws
   runtime: python3.8
   lambdaHashingVersion: 20201221
+  profile: serverless-admin
+  region: us-east-1
 
 # you can overwrite defaults here
 #  stage: dev
@@ -59,7 +61,7 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: handler.handle
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
