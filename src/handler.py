@@ -4,11 +4,9 @@ import logging
 
 logging.basicConfig(level = logging.INFO)
 
-# Find my team and opponent's team
-my_team = MyTeam(my_league, "Drip Bayless")
-
 # Get stats
 def handle(event, context):
+    my_team = MyTeam(my_league, "Drip Bayless")
     comparison = my_team.get_current_matchup_comparison()
     logging.info(comparison)
 
