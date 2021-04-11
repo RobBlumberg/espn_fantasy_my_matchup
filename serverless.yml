@@ -27,6 +27,15 @@ provider:
   profile: serverless-admin
   region: us-east-1
 
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: 
+        - "secretsmanager:*"
+      Resource: arn:aws:secretsmanager:us-east-1:978072805127:secret:espn-fantasy-league-creds-IKFhtX
+
+custom:
+  secrets: ${ssm:/aws/reference/secretsmanager/espn-fantasy-league-creds~true}
+
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
@@ -60,8 +69,12 @@ provider:
 #    - include-me-dir/**
 
 functions:
-  handle:
-    handler: handler.handle
+  handler:
+    handler: src/handler.handle
+    environment:
+      LEAGUE_SWID: ${self:custom.secrets.LEAGUE_SWID}
+      LEAGUE_ESPN_S2: ${self:custom.secrets.LEAGUE_ESPN_S2}
+      LEAGUE_ID: ${self:custom.secrets.LEAGUE_ID}
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
