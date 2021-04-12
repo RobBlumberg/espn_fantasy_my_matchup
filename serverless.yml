@@ -26,6 +26,8 @@ provider:
   lambdaHashingVersion: 20201221
   profile: serverless-admin
   region: us-east-1
+  memorySize: 512
+  timeout: 60
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -35,6 +37,8 @@ provider:
 
 custom:
   secrets: ${ssm:/aws/reference/secretsmanager/espn-fantasy-league-creds~true}
+  pythonRequirements:
+    dockerizePip: true
 
 # you can overwrite defaults here
 #  stage: dev
@@ -126,3 +130,7 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  - serverless-python-requirements
+
