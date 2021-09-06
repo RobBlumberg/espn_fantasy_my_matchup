@@ -13,17 +13,16 @@ format: ## run code formatters
 check_format: ## check for code formatter errors
 	poetry run flake8
 
-#.PHONY: test
-#test: ## run test suite
-#	poetry run python -m pytest -vv tests
+.PHONY: test
+test: ## run test suite
+	poetry run python -m pytest -vv tests
 
-#.PHONY: coverage
-#coverage: ## run test suite and output coverage files
-	# poetry run python -m pytest \
-	# 	--verbose \
-	# 	--cov-report term \
-	# 	--cov-report html:coverage/html \
-	# 	--cov-report xml:coverage/coverage.xml \
-	# 	--cov-report annotate:coverage/annotate \
-	# 	--cov=va_framework \
-	# 	test
+.PHONY: build
+build: ## build docker image
+	docker build -t espn_my_matchup --ssh github_ssh_key=/Users/robertblumberg/.ssh/id_rsa  .
+
+.PHONY: push
+build: ## push docker image to ecr
+	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-east-1.amazonaws.com
+	docker tag espn_my_matchup:latest 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
+	docker push 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
