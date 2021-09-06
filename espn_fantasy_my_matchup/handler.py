@@ -19,13 +19,11 @@ def handle(event, context):
     
     # get stats
     my_team = MyTeam(my_league, "Drip Bayless")
-    comparison = my_team.get_current_matchup_comparison()
-    logging.info(f"\n{comparison.to_json()}")
+    comparison = my_team.get_current_matchup_comparison().to_dict()
+    logging.info(f"\n{comparison}")
     
     # transform payload and write to dynamoDB
     payload = fantasy_comparison_response_transformer(comparison)
     if not os.environ.get("DEBUG"):
-        logging.info("posted")
         write_outputs(payload)
-    else:
-        logging.info("not posted")
+        logging.info("Posted outputs")
