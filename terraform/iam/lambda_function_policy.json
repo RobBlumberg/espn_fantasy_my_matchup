@@ -7,6 +7,20 @@
             ],
             "Effect"   : "Allow",
             "Resource" : "*"
+        },
+        {
+            "Sid": "ReadWriteTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": "arn:aws:dynamodb:us-east-1:978072805127:table/espn_my_fantasy_outputs"
         }
     ]
 }
