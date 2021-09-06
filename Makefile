@@ -19,7 +19,7 @@ test: ## run test suite
 
 .PHONY: build
 build: ## build docker image
-	docker build -t espn_my_matchup --ssh github_ssh_key=/Users/robertblumberg/.ssh/id_rsa  .
+	docker build -t espn_my_matchup --ssh github_ssh_key=/Users/robertblumberg/.ssh/id_rsa  --no-cache .
 
 .PHONY: push
 push: ## push docker image to ecr
