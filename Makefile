@@ -7,6 +7,7 @@ init: ## install poetry and dev deps
 
 .PHONY: format
 format: ## run code formatters
+	poetry run isort -rc -sp .isort.cfg .
 	poetry run black .
 
 .PHONY: check_format
