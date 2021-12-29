@@ -1,6 +1,6 @@
 from datetime import datetime
-from uuid import uuid1
 from decimal import Decimal
+from uuid import uuid1
 
 HOME_TEAM_NAME = "Drip Bayless"
 

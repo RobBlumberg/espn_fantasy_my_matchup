@@ -1,11 +1,12 @@
-from espn_fantasy_matchup_stats.fantasy import my_league
-from espn_fantasy_matchup_stats.fantasy import MyTeam
-from .helper_io import fantasy_comparison_response_transformer
-import boto3
-import os
 import logging
-
+import os
 from datetime import date
+
+import boto3
+from espn_fantasy_matchup_stats.fantasy import MyTeam
+from espn_fantasy_matchup_stats.fantasy import my_league
+
+from .helper_io import fantasy_comparison_response_transformer
 
 logging.basicConfig(level=logging.INFO)
 
