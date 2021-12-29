@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.INFO)
 START_DATE = date(2021, 12, 28)
 END_DATE = date(2021, 12, 29)
 
+
 def write_outputs(payload):
 
     dynamodb = boto3.resource("dynamodb")
