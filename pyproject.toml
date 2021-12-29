@@ -11,7 +11,9 @@ boto3 = "^1.18.36"
 Flask = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
+flake8 = "^3.8.4"
 black = "^20.8b1"
+ipykernel = "^6.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
