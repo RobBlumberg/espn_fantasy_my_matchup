@@ -26,3 +26,7 @@ push: ## push docker image to ecr
 	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-east-1.amazonaws.com
 	docker tag espn_my_matchup:latest 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
 	docker push 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
+
+.PHONY: app
+app: ## run app
+	flask run
