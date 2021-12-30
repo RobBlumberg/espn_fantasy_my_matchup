@@ -2,8 +2,8 @@ from datetime import date
 
 from espn_fantasy_matchup_stats.fantasy import MyTeam
 from espn_fantasy_matchup_stats.fantasy import my_league
-
 from flask import render_template
+
 from app import app
 from app.forms import MatchupForm
 
@@ -11,8 +11,8 @@ START_DATE = date(2021, 12, 29)
 END_DATE = date(2022, 1, 2)
 
 
-@app.route("/", methods=['GET', 'POST'])
-@app.route("/index", methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])
 def index():
     form = MatchupForm()
 
