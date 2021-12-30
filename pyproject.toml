@@ -6,9 +6,10 @@ authors = ["RobBlumberg <robertblumberg97@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-espn_fantasy_matchup_stats = {git = "git@github.com:RobBlumberg/espn_fantasy_matchup_stats.git", rev = "3331918404fe009d30b78784a07c40c7bab33e68"}
+espn_fantasy_matchup_stats = {git = "git@github.com:RobBlumberg/espn_fantasy_matchup_stats.git", rev = "89482d82ef66dbd83c95efb18704642cfa690d01"}
 boto3 = "^1.18.36"
 Flask = "^2.0.2"
+Flask-WTF = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"
