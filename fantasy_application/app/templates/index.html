@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <h1>ESPN Fantasy Matchup</h1>
+    </head>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.your_team.label }}<br>
+            {{ form.your_team(size=32) }}
+        </p>
+        <p>
+            {{ form.opp_team.label }}<br>
+            {{ form.opp_team(size=32) }}
+        </p>
+        <p>
+            {{ form.stat_type.label }}<br>
+            {{ form.stat_type(size=32) }}
+        </p>
+        <p>
+            {{ form.start_date.label }}<br>
+            {{ form.start_date(size=32) }}
+        </p>
+        <p>
+            {{ form.end_date.label }}<br>
+            {{ form.end_date(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <body>
+        <table>
+            <tr>
+                {% for key in items[0].keys() %}
+                <th> {{ key }} </th>
+                {% endfor %}
+            </tr>
+
+            {% for item in items %}
+            <tr>
+                <td class="stat">{{item.stat}}</td>
+                <td class="my_score">{{item.my_score}}</td>
+                <td class="opp_score"><span>{{item.opp_score}}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
