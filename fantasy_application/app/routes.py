@@ -1,7 +1,7 @@
 from datetime import date
 
 from espn_fantasy_matchup_stats.fantasy import MyTeam
-from espn_fantasy_matchup_stats.fantasy import my_league
+from espn_fantasy_matchup_stats.fantasy.league_auth import league_from_env
 from flask import render_template
 
 from app import app
@@ -16,6 +16,7 @@ END_DATE = date(2022, 1, 2)
 def index():
     form = MatchupForm()
 
+    my_league = league_from_env()
     team1 = MyTeam(my_league, "Drip Bayless")
     team2 = team1.get_opponents_team()
     comparison = MyTeam.matchup_comparison(

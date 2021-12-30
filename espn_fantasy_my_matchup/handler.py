@@ -4,7 +4,7 @@ from datetime import date
 
 import boto3
 from espn_fantasy_matchup_stats.fantasy import MyTeam
-from espn_fantasy_matchup_stats.fantasy import my_league
+from espn_fantasy_matchup_stats.fantasy.league_auth import league_from_env
 
 from .helper_io import fantasy_comparison_response_transformer
 
@@ -25,8 +25,12 @@ def write_outputs(payload):
 def handle(event, context):
 
     # get stats
+    my_league = league_from_env()
     my_team = MyTeam(my_league, "Drip Bayless")
-    comparison = my_team.get_matchup_comparison(START_DATE, END_DATE).to_dict()
+    opp_team = my_team.get_opponents_team()
+    comparison = my_team.matchup_comparison(
+        my_team, opp_team, START_DATE, END_DATE
+    ).to_dict()
     logging.info(f"\n{comparison}")
 
     # transform payload and write to dynamoDB
