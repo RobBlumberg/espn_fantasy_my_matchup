@@ -1,8 +1,6 @@
-<!doctype html>
-<html>
-    <head>
-        <h1>ESPN Fantasy Matchup</h1>
-    </head>
+{% extends "base.html" %}
+
+{% block content %}
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -51,5 +49,4 @@
             </tr>
             {% endfor %}
         </table>
-    </body>
-</html>
+{% endblock %}
