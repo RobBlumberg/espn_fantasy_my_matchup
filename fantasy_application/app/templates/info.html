@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>How it Works</h2>
+    <p>
+        The stat projections are made by retrieving the average stats of the players
+        on the specified teams, using the specified <em>stat type</em>.
+        The projections also take into account injury status and schedule
+        (ie. whether the player is playing or not). A player is considered injured
+        on a given date if his current injury status is different from ACTIVE.
+        The exception is that if a player's status is DAY-TO-DAY,
+        the player is considered to be ACTIVE 2 days from the current date.
+    </p>
+{% endblock %}

@@ -46,3 +46,8 @@ def index():
         items = [{}]
 
     return render_template("index.html", form=form, items=items)
+
+
+@app.route("/info")
+def info():
+    return render_template("info.html")
