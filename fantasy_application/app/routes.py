@@ -42,5 +42,7 @@ def index():
         ]
     elif request.method == "GET":
         items = [{}]
+    else:
+        items = [{}]
 
     return render_template("index.html", form=form, items=items)
