@@ -31,12 +31,14 @@ def index():
         comparison = MyTeam.matchup_comparison(
             team1, team2, start_date, end_date, stat_type=stat_type
         )
+        comparison["diff"] = comparison[team1_name] - comparison[team2_name]
         decimals = 2
         items = [
             {
-                "stat": k,
-                "my_score": round(v[0], decimals),
-                "opp_score": round(v[1], decimals),
+                "Stat": k,
+                "My Score": round(v[0], decimals),
+                "Opp Score": round(v[1], decimals),
+                "Diff": round(v[2], decimals),
             }
             for k, v in comparison.T.to_dict("list").items()
         ]
