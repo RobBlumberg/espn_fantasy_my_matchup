@@ -32,6 +32,7 @@ def index():
             team1, team2, start_date, end_date, stat_type=stat_type
         )
         comparison["diff"] = comparison[team1_name] - comparison[team2_name]
+        comparison.loc["TO", "diff"] *= -1
         decimals = 2
         items = [
             {
