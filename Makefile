@@ -18,12 +18,22 @@ check_format: ## check for code formatter errors
 test: ## run test suite
 	poetry run python -m pytest -vv tests
 
-.PHONY: build
-build: ## build docker image
+.PHONY: build_image
+build_image: ## build docker image
 	docker build -t espn_my_matchup --ssh github_ssh_key=/Users/robertblumberg/.ssh/id_rsa  --no-cache .
 
-.PHONY: push
-push: ## push docker image to ecr
+.PHONY: push_image
+push_image: ## push docker image to ecr
 	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-east-1.amazonaws.com
 	docker tag espn_my_matchup:latest 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
 	docker push 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
+
+.PHONY: build_app_image
+build_app_image: ## build docker image
+	docker build -t fantasy_app -f fantasy_application/Dockerfile --ssh github_ssh_key=/Users/robertblumberg/.ssh/id_rsa --no-cache .
+
+.PHONY: push_app_image
+push_app_image: ## push docker image to ecr
+	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-east-1.amazonaws.com
+	docker tag fantasy_app:latest 978072805127.dkr.ecr.us-east-1.amazonaws.com/fantasy_app:latest
+	docker push 978072805127.dkr.ecr.us-east-1.amazonaws.com/fantasy_app:latest
