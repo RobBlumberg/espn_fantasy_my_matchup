@@ -10,6 +10,7 @@ espn_fantasy_matchup_stats = {git = "git@github.com:RobBlumberg/espn_fantasy_mat
 boto3 = "^1.18.36"
 Flask = "^2.0.2"
 Flask-WTF = "^1.0.0"
+metaflow = "^2.4.8"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"
