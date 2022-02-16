@@ -24,5 +24,10 @@ RUN --mount=type=ssh,id=github_ssh_key pip install -r requirements.txt --no-cach
 # Copy app files
 COPY ./espn_fantasy_my_matchup ./espn_fantasy_my_matchup
 
+# add env var for metaflow
+ENV USERNAME=produser
+ENV USER=produser
+
 # Entrypoint command
-CMD [ "espn_fantasy_my_matchup.handler.handle" ]
+ENTRYPOINT [ "python", "-m", "espn_fantasy_my_matchup.handler", "run" ]
+#CMD [ "espn_fantasy_my_matchup.handler.handle" ]
