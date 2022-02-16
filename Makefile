@@ -24,9 +24,9 @@ build_image: ## build docker image
 
 .PHONY: push_image
 push_image: ## push docker image to ecr
-	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-east-1.amazonaws.com
-	docker tag espn_my_matchup:latest 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
-	docker push 978072805127.dkr.ecr.us-east-1.amazonaws.com/espn_my_matchup:latest
+	aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-west-2.amazonaws.com
+	docker tag espn_my_matchup:latest 978072805127.dkr.ecr.us-west-2.amazonaws.com/espn_my_matchup:latest
+	docker push 978072805127.dkr.ecr.us-west-2.amazonaws.com/espn_my_matchup:latest
 
 .PHONY: build_app_image
 build_app_image: ## build docker image
@@ -34,6 +34,6 @@ build_app_image: ## build docker image
 
 .PHONY: push_app_image
 push_app_image: ## push docker image to ecr
-	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-east-1.amazonaws.com
-	docker tag fantasy_app:latest 978072805127.dkr.ecr.us-east-1.amazonaws.com/fantasy_app:latest
-	docker push 978072805127.dkr.ecr.us-east-1.amazonaws.com/fantasy_app:latest
+	aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-west-2.amazonaws.com
+	docker tag fantasy_app:latest 978072805127.dkr.ecr.us-west-1.amazonaws.com/fantasy_app:latest
+	docker push 978072805127.dkr.ecr.us-west-2.amazonaws.com/fantasy_app:latest
