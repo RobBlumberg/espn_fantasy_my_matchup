@@ -21,6 +21,21 @@
                 "dynamodb:UpdateItem"
             ],
             "Resource": "arn:aws:dynamodb:us-east-1:978072805127:table/espn_my_fantasy_outputs"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-east-1:978072805127:log-group:espn-lambda-logs:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:us-east-1:978072805127:log-group:espn-lambda-logs:*"
+            ]
         }
     ]
 }
