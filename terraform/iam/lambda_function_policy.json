@@ -24,18 +24,12 @@
         },
         {
             "Effect": "Allow",
-            "Action": "logs:CreateLogGroup",
-            "Resource": "arn:aws:logs:us-east-1:978072805127:log-group:espn-lambda-logs:*"
-        },
-        {
-            "Effect": "Allow",
             "Action": [
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
             ],
-            "Resource": [
-                "arn:aws:logs:us-east-1:978072805127:log-group:espn-lambda-logs:*"
-            ]
+            "Resource": "*"
         }
     ]
 }
