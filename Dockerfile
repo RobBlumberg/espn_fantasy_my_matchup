@@ -29,7 +29,7 @@ ENV USERNAME=produser
 ENV METAFLOW_DATASTORE_SYSROOT_S3="s3://espn-fantasy-s3-test/metaflow/"
 ENV METAFLOW_DATATOOLS_S3ROOT="s3://espn-fantasy-s3-test/data"
 ENV METAFLOW_DEFAULT_DATASTORE="s3"
-ENV METAFLOW_DEFAULT_METADATA="local"
+ENV METAFLOW_DEFAULT_METADATA="service"
 
 # Entrypoint command
 ENTRYPOINT [ "python", "-m", "espn_fantasy_my_matchup.handler", "run" ]
