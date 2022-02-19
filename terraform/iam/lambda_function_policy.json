@@ -9,20 +9,6 @@
             "Resource" : "*"
         },
         {
-            "Sid": "ReadWriteTable",
-            "Effect": "Allow",
-            "Action": [
-                "dynamodb:BatchGetItem",
-                "dynamodb:GetItem",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:PutItem",
-                "dynamodb:UpdateItem"
-            ],
-            "Resource": "arn:aws:dynamodb:us-east-1:978072805127:table/espn_my_fantasy_outputs"
-        },
-        {
             "Effect": "Allow",
             "Action": [
               "logs:CreateLogGroup",
@@ -30,6 +16,22 @@
               "logs:PutLogEvents"
             ],
             "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketVersions",
+                "s3:GetObjectVersion",
+                "s3:GetObjectTagging",
+                "s3:GetObjectVersionTagging",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::espn-fantasy-s3-test",
+                "arn:aws:s3:::espn-fantasy-s3-test/*"
+            ]
         }
     ]
 }
