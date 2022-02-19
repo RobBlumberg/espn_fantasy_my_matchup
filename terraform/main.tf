@@ -111,9 +111,9 @@ module "metaflow-computation" {
   enable_step_functions                   = var.enable_step_functions
   iam_partition                           = "aws"
   metaflow_step_functions_dynamodb_policy = ""
-  subnet1_id      = element(module.vpc.private_subnets, 0)
-  subnet2_id      = element(module.vpc.private_subnets, 1)
-  metaflow_vpc_id = module.vpc.vpc_id
+  subnet1_id                              = element(module.vpc.private_subnets, 0)
+  subnet2_id                              = element(module.vpc.private_subnets, 1)
+  metaflow_vpc_id                         = module.vpc.vpc_id
 
   standard_tags = {
     Terraformed = true
@@ -126,19 +126,19 @@ module "metaflow-metadata-service" {
   resource_prefix = local.resource_prefix
   resource_suffix = local.resource_suffix
 
-  access_list_cidr_blocks           = var.access_list_cidr_blocks
-  database_password                 = module.metaflow-datastore.database_password
-  database_username                 = module.metaflow-datastore.database_username
-  datastore_s3_bucket_kms_key_arn   = module.metaflow-datastore.datastore_s3_bucket_kms_key_arn
-  fargate_execution_role_arn        = module.metaflow-computation.ecs_execution_role_arn
-  iam_partition                     = var.iam_partition
-  metadata_service_container_image  = local.metadata_service_container_image
-  metaflow_vpc_id = module.vpc.vpc_id
-  rds_master_instance_endpoint      = module.metaflow-datastore.rds_master_instance_endpoint
-  s3_bucket_arn                     = module.metaflow-datastore.s3_bucket_arn
-  subnet1_id      = element(module.vpc.private_subnets, 0)
-  subnet2_id      = element(module.vpc.private_subnets, 1)
-  vpc_cidr_block                    = module.vpc.vpc_cidr_block
+  access_list_cidr_blocks          = var.access_list_cidr_blocks
+  database_password                = module.metaflow-datastore.database_password
+  database_username                = module.metaflow-datastore.database_username
+  datastore_s3_bucket_kms_key_arn  = module.metaflow-datastore.datastore_s3_bucket_kms_key_arn
+  fargate_execution_role_arn       = module.metaflow-computation.ecs_execution_role_arn
+  iam_partition                    = var.iam_partition
+  metadata_service_container_image = local.metadata_service_container_image
+  metaflow_vpc_id                  = module.vpc.vpc_id
+  rds_master_instance_endpoint     = module.metaflow-datastore.rds_master_instance_endpoint
+  s3_bucket_arn                    = module.metaflow-datastore.s3_bucket_arn
+  subnet1_id                       = element(module.vpc.private_subnets, 0)
+  subnet2_id                       = element(module.vpc.private_subnets, 1)
+  vpc_cidr_block                   = module.vpc.vpc_cidr_block
 
   standard_tags = {
     Terraformed = true
@@ -154,9 +154,9 @@ module "metaflow-datastore" {
   ecs_execution_role_arn             = module.metaflow-computation.ecs_execution_role_arn
   ecs_instance_role_arn              = module.metaflow-computation.ecs_instance_role_arn
   metadata_service_security_group_id = module.metaflow-metadata-service.metadata_service_security_group_id
-  subnet1_id      = element(module.vpc.private_subnets, 0)
-  subnet2_id      = element(module.vpc.private_subnets, 1)
-  metaflow_vpc_id = module.vpc.vpc_id
+  subnet1_id                         = element(module.vpc.private_subnets, 0)
+  subnet2_id                         = element(module.vpc.private_subnets, 1)
+  metaflow_vpc_id                    = module.vpc.vpc_id
 
   standard_tags = {
     Terraformed = true
