@@ -10,10 +10,12 @@ from espn_fantasy_my_matchup.helper_io import fantasy_comparison_response_transf
 
 logging.basicConfig(level=logging.INFO)
 
-from metaflow import FlowSpec, step, metadata, conda
+from metaflow import FlowSpec, step, metadata, conda, S3, current
 
 from datetime import datetime
 import pytz
+
+import pickle
 
 START_DATE = date(2021, 12, 28)
 END_DATE = date(2021, 12, 29)
@@ -22,8 +24,6 @@ class ESPNFantasyFlow(FlowSpec):
 
     @step
     def start(self):
-        print("Starting metaflow workflow...")
-
         # get stats
         my_league = league_from_env()
         self.my_team = MyTeam(my_league, "Drip Bayless")
@@ -38,6 +38,10 @@ class ESPNFantasyFlow(FlowSpec):
             self.my_team, self.opp_team, START_DATE, END_DATE
         ).to_dict()
         logging.info(f"\n{self.comparison}")
+
+        with S3(s3root='s3://espn-fantasy-s3-test/') as s3:
+            comp_df_bytes = pickle.dumps(self.comparison)
+            s3.put(f"metaflow/outputs/{current.flow_name}/{current.run_id}/{current.step_name}/comparison_df", comp_df_bytes)
 
         self.next(self.write_outputs)
 
