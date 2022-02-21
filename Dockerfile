@@ -24,12 +24,10 @@ RUN --mount=type=ssh,id=github_ssh_key pip install -r requirements.txt --no-cach
 # Copy app files
 COPY ./espn_fantasy_my_matchup ./espn_fantasy_my_matchup
 
-# add env vars for metaflow config
+# Add env vars and copy in metaflow config
+COPY ./metaflow_config ./metaflow_config
+ENV METAFLOW_HOME=./metaflow_config/
 ENV USERNAME=produser
-ENV METAFLOW_DATASTORE_SYSROOT_S3="s3://espn-fantasy-s3-test/metaflow/"
-ENV METAFLOW_DATATOOLS_S3ROOT="s3://espn-fantasy-s3-test/data"
-ENV METAFLOW_DEFAULT_DATASTORE="s3"
-ENV METAFLOW_DEFAULT_METADATA="service"
 
 # Entrypoint command
-ENTRYPOINT [ "python", "-m", "espn_fantasy_my_matchup.handler", "run" ]
+ENTRYPOINT [ "python", "-m", "espn_fantasy_my_matchup.handler", "--datastore", "s3", "run" ]
