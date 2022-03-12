@@ -139,3 +139,6 @@ terraform/terraform.tfstate*
 # metaflow
 .metaflow/
 metaflow_config/
+
+# macOS
+.DS_Store
