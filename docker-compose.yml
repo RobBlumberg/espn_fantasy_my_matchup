@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+    espn_fantasy_my_matchup:
+        image: espn_my_matchup:latest
+        volumes:
+            - ~/.aws/:/root/.aws:ro
+        ports:
+            - "9000:8080"
+        env_file:
+            - ".env"
