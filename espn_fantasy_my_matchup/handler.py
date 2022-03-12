@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import date
+import pandas as pd
 
 import boto3
 from espn_fantasy_matchup_stats.fantasy import MyTeam
@@ -33,11 +34,13 @@ class ESPNFantasyFlow(FlowSpec):
 
     @step
     def get_comparison(self):
-
-        self.comparison = self.my_team.matchup_comparison(
-            self.my_team, self.opp_team, START_DATE, END_DATE
-        ).to_dict()
-        logging.info(f"\n{self.comparison}")
+        # TODO: fix
+        # self.comparison = self.my_team.matchup_comparison(
+        #     self.my_team, self.opp_team, START_DATE, END_DATE
+        # ).to_dict()
+        # logging.info(f"\n{self.comparison}")
+        # TEMP:
+        self.comparison = pd.DataFrame({"a": [1, 2, 3]})
 
         with S3(s3root='s3://espn-fantasy-s3-test/') as s3:
             comp_df_bytes = pickle.dumps(self.comparison)
@@ -47,7 +50,10 @@ class ESPNFantasyFlow(FlowSpec):
 
     @step
     def write_outputs(self):
-        payload = fantasy_comparison_response_transformer(self.comparison)
+        # TODO: fix
+        #payload = fantasy_comparison_response_transformer(self.comparison)
+        # TEMP:
+        self.comparison = pd.DataFrame({"b": [4, 5, 6]})
 
         self.next(self.end)
     
