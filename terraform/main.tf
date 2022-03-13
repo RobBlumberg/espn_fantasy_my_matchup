@@ -86,6 +86,25 @@ module "metaflow-datastore" {
 
 ### ECR LAMBDA FUNCTION ###
 
+locals {
+  metaflow_bucket_policy_statement = {
+    Effect = "Allow",
+    Action = [
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:ListBucketVersions",
+      "s3:GetObjectVersion",
+      "s3:GetObjectTagging",
+      "s3:GetObjectVersionTagging",
+      "s3:PutObject"
+    ],
+    Resource = [
+      module.metaflow-datastore.s3_bucket_arn,
+      "${module.metaflow-datastore.s3_bucket_arn}/*"
+    ]
+  }
+}
+
 # get league secrets from secret manager
 data "aws_secretsmanager_secret_version" "league_creds" {
   secret_id = "arn:aws:secretsmanager:us-west-2:978072805127:secret:espn-fantasy-league-creds-IKFhtX"
@@ -142,7 +161,21 @@ resource "aws_iam_role" "lambda_role" {
 resource "aws_iam_role_policy" "lambda_policy" {
   name   = "lambda_function_policy"
   role   = aws_iam_role.lambda_role.id
-  policy = file("iam/lambda_function_policy.json")
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+          "Effect": "Allow",
+          "Action": [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Resource": "*"
+      },
+      local.metaflow_bucket_policy_statement
+    ]
+  })
 }
 
 # create lambda function
@@ -150,7 +183,7 @@ resource "aws_lambda_function" "espn_my_matchup" {
   function_name = "espn_my_matchup_function"
   role          = aws_iam_role.lambda_role.arn
   memory_size   = 1024
-  timeout       = 60
+  timeout       = 300
   image_uri     = "${aws_ecr_repository.repository.repository_url}@${data.aws_ecr_image.lambda_image.id}"
   package_type  = "Image"
   environment {
