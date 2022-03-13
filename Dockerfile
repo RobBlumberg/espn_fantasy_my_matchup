@@ -26,8 +26,9 @@ COPY ./espn_fantasy_my_matchup ./espn_fantasy_my_matchup
 
 # Add env vars and copy in metaflow config
 COPY ./metaflow_config ./metaflow_config
-ENV METAFLOW_HOME=./metaflow_config/
+ENV METAFLOW_HOME=./metaflow_config
 ENV USERNAME=produser
 
 # Entrypoint command
-ENTRYPOINT [ "python", "-m", "espn_fantasy_my_matchup.handler", "--datastore", "s3", "run" ]
+CMD [ "espn_fantasy_my_matchup.handler.handle" ]
+#ENTRYPOINT [ "python", "-m", "espn_fantasy_my_matchup.handler", "run" ]
