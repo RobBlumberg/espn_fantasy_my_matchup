@@ -37,3 +37,7 @@ push_app_image: ## push docker image to ecr
 	aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 978072805127.dkr.ecr.us-west-2.amazonaws.com
 	docker tag fantasy_app:latest 978072805127.dkr.ecr.us-west-1.amazonaws.com/fantasy_app:latest
 	docker push 978072805127.dkr.ecr.us-west-2.amazonaws.com/fantasy_app:latest
+
+.PHONY: start
+start:
+	docker-compose up
