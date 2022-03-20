@@ -1,6 +1,3 @@
-import sys
-sys.path.append("/Users/robertblumberg/Documents/metaflow/")
-
 import logging
 import os
 from datetime import date
@@ -52,16 +49,17 @@ class ESPNFantasyFlow(FlowSpec):
         #     comp_df_bytes = pickle.dumps(self.comparison)
         #     s3.put(f"metaflow/outputs/{current.flow_name}/{current.run_id}/{current.step_name}/comparison_df", comp_df_bytes)
 
-        self.next(self.write_outputs)
-
-    @step
-    def write_outputs(self):
-        # TODO: fix
-        # payload = fantasy_comparison_response_transformer(self.comparison)
-        # TEMP:
-        self.payload = pd.DataFrame({"b": [4, 5, 6]})
-
+        #self.next(self.write_outputs)
         self.next(self.end)
+
+    # @step
+    # def write_outputs(self):
+    #     # TODO: fix
+    #     # payload = fantasy_comparison_response_transformer(self.comparison)
+    #     # TEMP:
+    #     self.payload = pd.DataFrame({"b": [4, 5, 6]})
+
+    #     self.next(self.end)
     
     @step
     def end(self):
