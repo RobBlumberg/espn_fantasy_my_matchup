@@ -47,7 +47,8 @@ module "metaflow-metadata-service" {
   resource_prefix = local.resource_prefix
   resource_suffix = local.resource_suffix
 
-  access_list_cidr_blocks          = var.access_list_cidr_blocks
+  # access_list_cidr_blocks          = var.access_list_cidr_blocks
+  access_list_cidr_blocks          = ["76.64.94.2/32"]
   database_password                = module.metaflow-datastore.database_password
   database_username                = module.metaflow-datastore.database_username
   datastore_s3_bucket_kms_key_arn  = module.metaflow-datastore.datastore_s3_bucket_kms_key_arn
@@ -159,23 +160,80 @@ resource "aws_iam_role" "lambda_role" {
 
 # create policy for lambda role
 resource "aws_iam_role_policy" "lambda_policy" {
-  name   = "lambda_function_policy"
-  role   = aws_iam_role.lambda_role.id
+  name = "lambda_function_policy"
+  role = aws_iam_role.lambda_role.id
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-          "Effect": "Allow",
-          "Action": [
-            "logs:CreateLogGroup",
-            "logs:CreateLogStream",
-            "logs:PutLogEvents"
-          ],
-          "Resource": "*"
+        "Effect" : "Allow",
+        "Action" : [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Resource" : "*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:CreateNetworkInterface",
+          "ec2:DeleteNetworkInterface",
+          "ec2:DescribeInstances",
+          "ec2:AttachNetworkInterface"
+        ],
+        "Resource" : "*"
       },
       local.metaflow_bucket_policy_statement
     ]
   })
+}
+
+module "vpc_espn" {
+
+  source = "terraform-aws-modules/vpc/aws"
+
+  name = "espn_vpc"
+  cidr = "10.101.0.0/16"
+
+  azs             = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  private_subnets = ["10.101.1.0/24", "10.101.2.0/24", "10.101.3.0/24"]
+  public_subnets  = ["10.101.101.0/24", "10.101.102.0/24", "10.101.103.0/24"]
+
+  enable_nat_gateway = true
+  single_nat_gateway = true
+
+}
+
+# resource "aws_internet_gateway" "gw" {
+#   vpc_id = module.vpc_espn.vpc_id
+
+#   tags = {
+#     Name = "espn_igw"
+#   }
+# }
+
+resource "aws_default_security_group" "default_security_group" {
+  vpc_id = module.vpc_espn.vpc_id
+
+  ingress {
+    protocol  = -1
+    self      = true
+    from_port = 0
+    to_port   = 0
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "espn-default-security-group"
+  }
 }
 
 # create lambda function
@@ -194,10 +252,10 @@ resource "aws_lambda_function" "espn_my_matchup" {
       LEAGUE_ID      = local.my_league_creds.LEAGUE_ID
     }
   }
-  # vpc_config {
-  #   subnet_ids         = [element(module.vpc.private_subnets, 0).id]
-  #   security_group_ids = [aws_default_security_group.default_security_group.id]
-  # }
+  vpc_config {
+    subnet_ids         = [element(module.vpc_espn.private_subnets, 0)]
+    security_group_ids = [aws_default_security_group.default_security_group.id]
+  }
 }
 
 
