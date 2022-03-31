@@ -48,7 +48,7 @@ module "metaflow-metadata-service" {
   resource_suffix = local.resource_suffix
 
   # access_list_cidr_blocks          = var.access_list_cidr_blocks
-  access_list_cidr_blocks          = ["76.64.94.2/32"]
+  access_list_cidr_blocks          = ["76.64.94.2/32", "52.26.218.230/32"]
   database_password                = module.metaflow-datastore.database_password
   database_username                = module.metaflow-datastore.database_username
   datastore_s3_bucket_kms_key_arn  = module.metaflow-datastore.datastore_s3_bucket_kms_key_arn
@@ -256,6 +256,29 @@ resource "aws_lambda_function" "espn_my_matchup" {
     subnet_ids         = [element(module.vpc_espn.private_subnets, 0)]
     security_group_ids = [aws_default_security_group.default_security_group.id]
   }
+}
+
+resource "aws_cloudwatch_event_rule" "cron_trigger" {
+  name                = "espn_my_matchup_function-trigger"
+  description         = "Triggers lambda every 2 minutes"
+  schedule_expression = "rate(2 minutes)"
+}
+
+resource "aws_cloudwatch_event_target" "cron_trigger" {
+  rule      = aws_cloudwatch_event_rule.cron_trigger.name
+  target_id = "espn_my_matchup_function"
+  arn       = aws_lambda_function.espn_my_matchup.arn
+  input = jsonencode({
+    "function_name": "espn"
+  })
+}
+
+resource "aws_lambda_permission" "cron_trigger" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.espn_my_matchup.arn
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.cron_trigger.arn
 }
 
 
