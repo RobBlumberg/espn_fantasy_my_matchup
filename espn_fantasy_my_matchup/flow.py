@@ -8,8 +8,6 @@ import boto3
 from espn_fantasy_matchup_stats.fantasy import MyTeam
 from espn_fantasy_matchup_stats.fantasy.league_auth import league_from_env
 
-#from espn_fantasy_my_matchup.helper_io import fantasy_comparison_response_transformer, remove_files
-
 logging.basicConfig(level=logging.INFO)
 
 from metaflow import FlowSpec, step, metadata, conda, S3, current
@@ -27,7 +25,6 @@ class ESPNFantasyFlow(FlowSpec):
 
     @step
     def start(self):
-        remove_files(f"/tmp/.metaflow/{current.flow_name}", exclude_run_id=current.run_id)
         # get stats
         my_league = league_from_env()
         self.my_team = MyTeam(my_league, "Drip Bayless")
@@ -65,22 +62,6 @@ class ESPNFantasyFlow(FlowSpec):
     def end(self):
         self.dummy_artifact = "here"
 
-def remove_files(dir_path, exclude_run_id=-1):
-    if exclude_run_id in dir_path:
-        return
 
-    for file_ in os.listdir(dir_path):
-        try:
-            file_path = f"{dir_path}/{file_}"
-            os.remove(file_path)
-            print(f"Removed file {file_path}")
-        except (PermissionError, FileNotFoundError, IsADirectoryError):
-            subdir = f"{dir_path}/{file_}"
-            remove_files(subdir, exclude_run_id=exclude_run_id)
-            if exclude_run_id in subdir:
-                return
-            os.rmdir(subdir)
-            print(f"Removed directory {subdir}")
-
-
-ESPNFantasyFlow()
+if __name__ == "__main__":
+    ESPNFantasyFlow()
